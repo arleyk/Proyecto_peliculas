@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendador de Películas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">🎬 CineMatch</h1>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-section="home">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#recommendations" class="nav-link" data-section="recommendations">Mis Recomendaciones</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sección Principal - Cuestionario -->
+    <section id="home" class="section active">
+        <div class="container">
+            <div class="hero">
+                <h2>Descubre tu película perfecta</h2>
+                <p>Responde estas preguntas sobre tus aspiraciones y deseos para recibir una recomendación personalizada</p>
+            </div>
+
+            <form id="movieForm" class="questionnaire">
+                <div class="question-group">
+                    <h3>¿Cómo te describes a ti mismo?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="personality" value="dark">
+                            <span>Una persona oscura y sin esperanzas</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="personality" value="optimistic">
+                            <span>Optimista y lleno de esperanza</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="personality" value="adventurous">
+                            <span>Aventurero y buscador de emociones</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="personality" value="contemplative">
+                            <span>Contemplativo y reflexivo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <h3>¿Cuál es tu mayor aspiración en la vida?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="aspiration" value="freedom">
+                            <span>Libertad absoluta y autodeterminación</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="aspiration" value="love">
+                            <span>Encontrar el amor verdadero</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="aspiration" value="success">
+                            <span>Alcanzar el éxito y reconocimiento</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="aspiration" value="justice">
+                            <span>Luchar por la justicia y hacer el bien</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <h3>¿Qué tipo de desafío te motiva más?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="challenge" value="survival">
+                            <span>Superar adversidades extremas</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="challenge" value="intellectual">
+                            <span>Resolver problemas complejos</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="challenge" value="emotional">
+                            <span>Conectar emocionalmente con otros</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="challenge" value="creative">
+                            <span>Crear algo único y significativo</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <h3>¿Cuál es tu mayor miedo?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="fear" value="isolation">
+                            <span>La soledad y el aislamiento</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="fear" value="failure">
+                            <span>El fracaso y la decepción</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="fear" value="loss">
+                            <span>Perder a las personas que amo</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="fear" value="meaninglessness">
+                            <span>Que mi vida no tenga sentido</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <h3>¿Qué te gustaría cambiar del mundo?</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="change" value="inequality">
+                            <span>Eliminar la desigualdad social</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="change" value="corruption">
+                            <span>Acabar con la corrupción y el abuso de poder</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="change" value="environment">
+                            <span>Proteger el medio ambiente</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="change" value="understanding">
+                            <span>Fomentar la comprensión entre culturas</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Obtener Recomendación</button>
+            </form>
+
+            <div id="result" class="result hidden">
+                <h3>Tu película recomendada es:</h3>
+                <div class="movie-card">
+                    <h4 id="movieTitle"></h4>
+                    <p id="movieDescription"></p>
+                    <p class="movie-reason"><strong>¿Por qué esta película?</strong> <span id="movieReason"></span></p>
+                </div>
+                <button id="saveRecommendation" class="save-btn">Guardar Recomendación</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Recomendaciones -->
+    <section id="recommendations" class="section">
+        <div class="container">
+            <h2>Mis Películas Recomendadas</h2>
+            <div id="recommendationsList" class="recommendations-grid">
+                <p class="no-recommendations">Aún no tienes recomendaciones guardadas. ¡Completa el cuestionario para obtener tu primera recomendación!</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
