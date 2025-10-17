@@ -16,133 +16,226 @@
                     <a href="#home" class="nav-link active" data-section="home">Inicio</a>
                 </li>
                 <li class="nav-item">
+                    <a href="#quiz" class="nav-link" data-section="quiz">Recomendación</a>
+                </li>
+                <li class="nav-item">
                     <a href="#recommendations" class="nav-link" data-section="recommendations">Mis Recomendaciones</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Sección Principal - Cuestionario -->
+    <!-- Sección de Inicio -->
     <section id="home" class="section active">
         <div class="container">
             <div class="hero">
                 <h2>Descubre tu película perfecta</h2>
-                <p>Responde estas preguntas sobre tus aspiraciones y deseos para recibir una recomendación personalizada</p>
+                <p>Responde preguntas sobre tus aspiraciones y deseos para recibir una recomendación personalizada</p>
+                <a href="#quiz" class="cta-btn" onclick="showSection('quiz')">Comenzar Cuestionario</a>
             </div>
 
-            <form id="movieForm" class="questionnaire">
-                <div class="question-group">
-                    <h3>¿Cómo te describes a ti mismo?</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="personality" value="dark">
-                            <span>Una persona oscura y sin esperanzas</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="personality" value="optimistic">
-                            <span>Optimista y lleno de esperanza</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="personality" value="adventurous">
-                            <span>Aventurero y buscador de emociones</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="personality" value="contemplative">
-                            <span>Contemplativo y reflexivo</span>
-                        </label>
+            <!-- Slider de Películas -->
+            <div class="movies-slider">
+                <h3>Algunas de nuestras recomendaciones</h3>
+                <div class="slider-container">
+                    <div class="slider-track">
+                        <div class="slide active">
+                            <div class="slide-content">
+                                <h4>El Pianista</h4>
+                                <p>La historia de un pianista judío que sobrevive al Holocausto en Varsovia, mostrando la resistencia humana ante la adversidad extrema.</p>
+                                <span class="slide-tag">Drama Histórico</span>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <h4>The Matrix</h4>
+                                <p>Un programador descubre que la realidad es una simulación y se une a la resistencia para liberar a la humanidad.</p>
+                                <span class="slide-tag">Ciencia Ficción</span>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <h4>The Pursuit of Happyness</h4>
+                                <p>Un padre soltero lucha por darle una mejor vida a su hijo mientras persigue sus sueños contra todas las adversidades.</p>
+                                <span class="slide-tag">Drama Inspiracional</span>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <h4>Interstellar</h4>
+                                <p>Un grupo de exploradores viaja a través de un agujero de gusano en busca de un nuevo hogar para la humanidad.</p>
+                                <span class="slide-tag">Aventura Espacial</span>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <h4>The Tree of Life</h4>
+                                <p>Una reflexión poética sobre la vida, la muerte y el significado de la existencia en un universo vasto.</p>
+                                <span class="slide-tag">Arte Contemplativo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-nav">
+                        <button class="nav-btn prev" onclick="changeSlide(-1)">‹</button>
+                        <div class="slider-dots">
+                            <span class="dot active" onclick="currentSlide(1)"></span>
+                            <span class="dot" onclick="currentSlide(2)"></span>
+                            <span class="dot" onclick="currentSlide(3)"></span>
+                            <span class="dot" onclick="currentSlide(4)"></span>
+                            <span class="dot" onclick="currentSlide(5)"></span>
+                        </div>
+                        <button class="nav-btn next" onclick="changeSlide(1)">›</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="question-group">
-                    <h3>¿Cuál es tu mayor aspiración en la vida?</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="aspiration" value="freedom">
-                            <span>Libertad absoluta y autodeterminación</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="aspiration" value="love">
-                            <span>Encontrar el amor verdadero</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="aspiration" value="success">
-                            <span>Alcanzar el éxito y reconocimiento</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="aspiration" value="justice">
-                            <span>Luchar por la justicia y hacer el bien</span>
-                        </label>
-                    </div>
+    <!-- Sección de Cuestionario -->
+    <section id="quiz" class="section">
+        <div class="container">
+            <div class="quiz-header">
+                <h2>Cuestionario Personalizado</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
                 </div>
+                <p class="progress-text">Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">5</span></p>
+            </div>
 
-                <div class="question-group">
-                    <h3>¿Qué tipo de desafío te motiva más?</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="challenge" value="survival">
-                            <span>Superar adversidades extremas</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="challenge" value="intellectual">
-                            <span>Resolver problemas complejos</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="challenge" value="emotional">
-                            <span>Conectar emocionalmente con otros</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="challenge" value="creative">
-                            <span>Crear algo único y significativo</span>
-                        </label>
+            <div class="quiz-container">
+                <form id="movieForm" class="questionnaire-slider">
+                    <!-- Pregunta 1 -->
+                    <div class="question-slide active" data-question="1">
+                        <div class="question-content">
+                            <h3>¿Cómo te describes a ti mismo?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="personality" value="dark">
+                                    <span>Una persona oscura y sin esperanzas</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="personality" value="optimistic">
+                                    <span>Optimista y lleno de esperanza</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="personality" value="adventurous">
+                                    <span>Aventurero y buscador de emociones</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="personality" value="contemplative">
+                                    <span>Contemplativo y reflexivo</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="question-group">
-                    <h3>¿Cuál es tu mayor miedo?</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="fear" value="isolation">
-                            <span>La soledad y el aislamiento</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="fear" value="failure">
-                            <span>El fracaso y la decepción</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="fear" value="loss">
-                            <span>Perder a las personas que amo</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="fear" value="meaninglessness">
-                            <span>Que mi vida no tenga sentido</span>
-                        </label>
+                    <!-- Pregunta 2 -->
+                    <div class="question-slide" data-question="2">
+                        <div class="question-content">
+                            <h3>¿Cuál es tu mayor aspiración en la vida?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="aspiration" value="freedom">
+                                    <span>Libertad absoluta y autodeterminación</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="aspiration" value="love">
+                                    <span>Encontrar el amor verdadero</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="aspiration" value="success">
+                                    <span>Alcanzar el éxito y reconocimiento</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="aspiration" value="justice">
+                                    <span>Luchar por la justicia y hacer el bien</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="question-group">
-                    <h3>¿Qué te gustaría cambiar del mundo?</h3>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="change" value="inequality">
-                            <span>Eliminar la desigualdad social</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="change" value="corruption">
-                            <span>Acabar con la corrupción y el abuso de poder</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="change" value="environment">
-                            <span>Proteger el medio ambiente</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="change" value="understanding">
-                            <span>Fomentar la comprensión entre culturas</span>
-                        </label>
+                    <!-- Pregunta 3 -->
+                    <div class="question-slide" data-question="3">
+                        <div class="question-content">
+                            <h3>¿Qué tipo de desafío te motiva más?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="challenge" value="survival">
+                                    <span>Superar adversidades extremas</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="challenge" value="intellectual">
+                                    <span>Resolver problemas complejos</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="challenge" value="emotional">
+                                    <span>Conectar emocionalmente con otros</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="challenge" value="creative">
+                                    <span>Crear algo único y significativo</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <button type="submit" class="submit-btn">Obtener Recomendación</button>
-            </form>
+                    <!-- Pregunta 4 -->
+                    <div class="question-slide" data-question="4">
+                        <div class="question-content">
+                            <h3>¿Cuál es tu mayor miedo?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="fear" value="isolation">
+                                    <span>La soledad y el aislamiento</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="fear" value="failure">
+                                    <span>El fracaso y la decepción</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="fear" value="loss">
+                                    <span>Perder a las personas que amo</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="fear" value="meaninglessness">
+                                    <span>Que mi vida no tenga sentido</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 5 -->
+                    <div class="question-slide" data-question="5">
+                        <div class="question-content">
+                            <h3>¿Qué te gustaría cambiar del mundo?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="change" value="inequality">
+                                    <span>Eliminar la desigualdad social</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="change" value="corruption">
+                                    <span>Acabar con la corrupción y el abuso de poder</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="change" value="environment">
+                                    <span>Proteger el medio ambiente</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="change" value="understanding">
+                                    <span>Fomentar la comprensión entre culturas</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="quiz-navigation">
+                    <button id="prevBtn" class="nav-btn" onclick="changeQuestion(-1)" disabled>Anterior</button>
+                    <button id="nextBtn" class="nav-btn" onclick="changeQuestion(1)">Siguiente</button>
+                    <button id="submitBtn" class="submit-btn hidden" onclick="submitQuiz()">Obtener Recomendación</button>
+                </div>
+            </div>
 
             <div id="result" class="result hidden">
                 <h3>Tu película recomendada es:</h3>

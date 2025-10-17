@@ -231,6 +231,150 @@ function showSection(sectionName) {
     }
 }
 
+// Variables globales para el slider
+let currentSlideIndex = 0;
+let currentQuestionIndex = 0;
+const totalSlides = 5;
+const totalQuestions = 5;
+
+// Funciones del slider de películas
+function changeSlide(direction) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    // Remover clase active del slide actual
+    slides[currentSlideIndex].classList.remove('active');
+    dots[currentSlideIndex].classList.remove('active');
+    
+    // Calcular nuevo índice
+    currentSlideIndex += direction;
+    
+    if (currentSlideIndex >= totalSlides) {
+        currentSlideIndex = 0;
+    } else if (currentSlideIndex < 0) {
+        currentSlideIndex = totalSlides - 1;
+    }
+    
+    // Agregar clase active al nuevo slide
+    slides[currentSlideIndex].classList.add('active');
+    dots[currentSlideIndex].classList.add('active');
+}
+
+function currentSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    // Remover clase active del slide actual
+    slides[currentSlideIndex].classList.remove('active');
+    dots[currentSlideIndex].classList.remove('active');
+    
+    // Establecer nuevo índice
+    currentSlideIndex = index - 1;
+    
+    // Agregar clase active al nuevo slide
+    slides[currentSlideIndex].classList.add('active');
+    dots[currentSlideIndex].classList.add('active');
+}
+
+// Funciones del cuestionario interactivo
+function changeQuestion(direction) {
+    const questions = document.querySelectorAll('.question-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Verificar si la pregunta actual tiene respuesta
+    if (direction === 1) {
+        const currentQuestion = questions[currentQuestionIndex];
+        const selectedOption = currentQuestion.querySelector('input[type="radio"]:checked');
+        if (!selectedOption) {
+            alert('Por favor, selecciona una opción antes de continuar.');
+            return;
+        }
+    }
+    
+    // Remover clase active de la pregunta actual
+    questions[currentQuestionIndex].classList.remove('active');
+    
+    // Calcular nuevo índice
+    currentQuestionIndex += direction;
+    
+    // Agregar clase active a la nueva pregunta
+    questions[currentQuestionIndex].classList.add('active');
+    
+    // Actualizar barra de progreso
+    updateProgressBar();
+    
+    // Actualizar botones de navegación
+    prevBtn.disabled = currentQuestionIndex === 0;
+    
+    if (currentQuestionIndex === totalQuestions - 1) {
+        nextBtn.classList.add('hidden');
+        submitBtn.classList.remove('hidden');
+    } else {
+        nextBtn.classList.remove('hidden');
+        submitBtn.classList.add('hidden');
+    }
+}
+
+function updateProgressBar() {
+    const progressFill = document.getElementById('progressFill');
+    const currentQuestionSpan = document.getElementById('currentQuestion');
+    
+    const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+    progressFill.style.width = progress + '%';
+    currentQuestionSpan.textContent = currentQuestionIndex + 1;
+}
+
+function submitQuiz() {
+    const currentQuestion = document.querySelectorAll('.question-slide')[currentQuestionIndex];
+    const selectedOption = currentQuestion.querySelector('input[type="radio"]:checked');
+    
+    if (!selectedOption) {
+        alert('Por favor, selecciona una opción antes de continuar.');
+        return;
+    }
+    
+    // Recopilar todas las respuestas
+    const answers = {};
+    const questionNames = ['personality', 'aspiration', 'challenge', 'fear', 'change'];
+    
+    questionNames.forEach(name => {
+        const input = document.querySelector(`input[name="${name}"]:checked`);
+        if (input) {
+            answers[name] = input.value;
+        }
+    });
+    
+    // Verificar que todas las preguntas estén respondidas
+    const missingFields = questionNames.filter(field => !answers[field]);
+    
+    if (missingFields.length > 0) {
+        alert('Por favor, responde todas las preguntas antes de continuar.');
+        return;
+    }
+    
+    // Obtener recomendación
+    const recommendation = getMovieRecommendation(answers);
+    
+    // Mostrar resultado
+    document.getElementById('movieTitle').textContent = recommendation.title;
+    document.getElementById('movieDescription').textContent = recommendation.description;
+    document.getElementById('movieReason').textContent = recommendation.reason;
+    
+    document.getElementById('result').classList.remove('hidden');
+    
+    // Scroll al resultado
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Auto-slide para el slider de películas
+function startAutoSlide() {
+    setInterval(() => {
+        changeSlide(1);
+    }, 5000); // Cambiar cada 5 segundos
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     // Navegación
@@ -240,41 +384,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const section = this.getAttribute('data-section');
             showSection(section);
         });
-    });
-    
-    // Formulario
-    document.getElementById('movieForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const answers = {};
-        
-        // Recopilar respuestas
-        for (let [key, value] of formData.entries()) {
-            answers[key] = value;
-        }
-        
-        // Verificar que todas las preguntas estén respondidas
-        const requiredFields = ['personality', 'aspiration', 'challenge', 'fear', 'change'];
-        const missingFields = requiredFields.filter(field => !answers[field]);
-        
-        if (missingFields.length > 0) {
-            alert('Por favor, responde todas las preguntas antes de continuar.');
-            return;
-        }
-        
-        // Obtener recomendación
-        const recommendation = getMovieRecommendation(answers);
-        
-        // Mostrar resultado
-        document.getElementById('movieTitle').textContent = recommendation.title;
-        document.getElementById('movieDescription').textContent = recommendation.description;
-        document.getElementById('movieReason').textContent = recommendation.reason;
-        
-        document.getElementById('result').classList.remove('hidden');
-        
-        // Scroll al resultado
-        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
     });
     
     // Botón guardar recomendación
@@ -297,8 +406,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
     });
     
+    // Inicializar barra de progreso
+    updateProgressBar();
+    
+    // Iniciar auto-slide para películas
+    startAutoSlide();
+    
     // Cargar recomendaciones al inicio si estamos en esa sección
     if (document.getElementById('recommendations').classList.contains('active')) {
         loadRecommendations();
     }
 });
+
