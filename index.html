@@ -21,7 +21,11 @@
                 <li class="nav-item">
                     <a href="#recommendations" class="nav-link" data-section="recommendations">Mis Recomendaciones</a>
                 </li>
+                <li class="nav-item">
+                    <a href="#create-movie" class="nav-link" data-section="create-movie">Crear Película</a>
+                </li>
             </ul>
+            <div id="streakBadge" class="streak-badge">Racha: 0 🔥</div>
         </div>
     </nav>
 
@@ -31,7 +35,7 @@
             <div class="hero">
                 <h2>Descubre tu película perfecta</h2>
                 <p>Responde preguntas sobre tus aspiraciones y deseos para recibir una recomendación personalizada</p>
-                <a href="#quiz" class="cta-btn" onclick="showSection('quiz')">Comenzar Cuestionario</a>
+                <a href="#quiz" class="cta-btn" onclick="showSection('quiz')"><span>Comenzar Cuestionario</span></a>
             </div>
 
             <!-- Slider de Películas -->
@@ -76,7 +80,7 @@
                         </div>
                     </div>
                     <div class="slider-nav">
-                        <button class="nav-btn prev" onclick="changeSlide(-1)">‹</button>
+                        <button class="nav-btn prev" onclick="changeSlide(-1)"><span>‹</span></button>
                         <div class="slider-dots">
                             <span class="dot active" onclick="currentSlide(1)"></span>
                             <span class="dot" onclick="currentSlide(2)"></span>
@@ -84,7 +88,7 @@
                             <span class="dot" onclick="currentSlide(4)"></span>
                             <span class="dot" onclick="currentSlide(5)"></span>
                         </div>
-                        <button class="nav-btn next" onclick="changeSlide(1)">›</button>
+                        <button class="nav-btn next" onclick="changeSlide(1)"><span>›</span></button>
                     </div>
                 </div>
             </div>
@@ -99,7 +103,7 @@
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <p class="progress-text">Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">5</span></p>
+                <p class="progress-text">Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">8</span></p>
             </div>
 
             <div class="quiz-container">
@@ -228,12 +232,87 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Pregunta 6 -->
+                    <div class="question-slide" data-question="6">
+                        <div class="question-content">
+                            <h3>¿Cómo prefieres pasar tu tiempo libre?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="leisure" value="solitude">
+                                    <span>En soledad, reflexionando o creando</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="leisure" value="social">
+                                    <span>Con amigos y familia, compartiendo momentos</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="leisure" value="adventure">
+                                    <span>Explorando nuevos lugares y experiencias</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="leisure" value="learning">
+                                    <span>Estudiando o aprendiendo algo nuevo</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 7 -->
+                    <div class="question-slide" data-question="7">
+                        <div class="question-content">
+                            <h3>¿Qué valoras más en una relación?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="relationship" value="loyalty">
+                                    <span>La lealtad y la confianza mutua</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="relationship" value="growth">
+                                    <span>El crecimiento personal y mutuo</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="relationship" value="freedom">
+                                    <span>La libertad y el respeto por la independencia</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="relationship" value="understanding">
+                                    <span>La comprensión y la comunicación profunda</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 8 -->
+                    <div class="question-slide" data-question="8">
+                        <div class="question-content">
+                            <h3>¿Cuál es tu filosofía de vida?</h3>
+                            <div class="options">
+                                <label class="option">
+                                    <input type="radio" name="philosophy" value="carpe_diem">
+                                    <span>Vive el momento, no dejes para mañana lo que puedes hacer hoy</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="philosophy" value="meaning">
+                                    <span>Busca el significado profundo en todo lo que haces</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="philosophy" value="balance">
+                                    <span>Mantén el equilibrio entre todas las áreas de tu vida</span>
+                                </label>
+                                <label class="option">
+                                    <input type="radio" name="philosophy" value="impact">
+                                    <span>Deja una huella positiva en el mundo</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
                 <div class="quiz-navigation">
-                    <button id="prevBtn" class="nav-btn" onclick="changeQuestion(-1)" disabled>Anterior</button>
-                    <button id="nextBtn" class="nav-btn" onclick="changeQuestion(1)">Siguiente</button>
-                    <button id="submitBtn" class="submit-btn hidden" onclick="submitQuiz()">Obtener Recomendación</button>
+                    <button id="prevBtn" class="nav-btn" onclick="changeQuestion(-1)" disabled><span>Anterior</span></button>
+                    <button id="nextBtn" class="nav-btn" onclick="changeQuestion(1)"><span>Siguiente</span></button>
+                    <button id="submitBtn" class="submit-btn hidden" onclick="submitQuiz()"><span>Obtener Recomendación</span></button>
                 </div>
             </div>
 
@@ -244,7 +323,16 @@
                     <p id="movieDescription"></p>
                     <p class="movie-reason"><strong>¿Por qué esta película?</strong> <span id="movieReason"></span></p>
                 </div>
-                <button id="saveRecommendation" class="save-btn">Guardar Recomendación</button>
+                <button id="saveRecommendation" class="save-btn"><span>Guardar Película</span></button>
+                
+                <h3 style="margin-top: 2rem;">Tu canción recomendada es:</h3>
+                <div class="movie-card">
+                    <h4 id="songTitle"></h4>
+                    <p class="song-artist" id="songArtist"></p>
+                    <p id="songDescription"></p>
+                    <p class="movie-reason"><strong>¿Por qué esta canción?</strong> <span id="songReason"></span></p>
+                </div>
+                <button id="saveSongRecommendation" class="save-btn"><span>Guardar Canción</span></button>
             </div>
         </div>
     </section>
@@ -253,8 +341,122 @@
     <section id="recommendations" class="section">
         <div class="container">
             <h2>Mis Películas Recomendadas</h2>
+            <div class="recommendations-actions">
+                <button id="clearRecommendations" class="save-btn" style="margin-bottom:16px;"><span>Borrar todas las películas</span></button>
+            </div>
             <div id="recommendationsList" class="recommendations-grid">
-                <p class="no-recommendations">Aún no tienes recomendaciones guardadas. ¡Completa el cuestionario para obtener tu primera recomendación!</p>
+                <p class="no-recommendations">Aún no tienes recomendaciones de películas guardadas. ¡Completa el cuestionario para obtener tu primera recomendación!</p>
+            </div>
+            
+            <h2 style="margin-top: 3rem;">Mis Canciones Recomendadas</h2>
+            <div class="recommendations-actions">
+                <button id="clearSongRecommendations" class="save-btn" style="margin-bottom:16px;"><span>Borrar todas las canciones</span></button>
+            </div>
+            <div id="songRecommendationsList" class="recommendations-grid">
+                <p class="no-recommendations">Aún no tienes recomendaciones de música guardadas. ¡Completa el cuestionario para obtener tu primera recomendación!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Creación de Película -->
+    <section id="create-movie" class="section">
+        <div class="container">
+            <div class="movie-creation-header">
+                <h2>🎬 Crea tu Película Mental</h2>
+                <p>Diseña la película perfecta basada en tus aspiraciones y metas personales</p>
+            </div>
+
+            <div class="movie-creation-form">
+                <form id="movieCreationForm">
+                    <div class="form-group">
+                        <label for="movieTitle">Título de tu película:</label>
+                        <input type="text" id="movieTitle" name="movieTitle" placeholder="Ej: El Viaje de mi Vida" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieGenre">Género:</label>
+                        <select id="movieGenre" name="movieGenre" required>
+                            <option value="">Selecciona un género</option>
+                            <option value="drama">Drama</option>
+                            <option value="comedia">Comedia</option>
+                            <option value="aventura">Aventura</option>
+                            <option value="ciencia-ficcion">Ciencia Ficción</option>
+                            <option value="romance">Romance</option>
+                            <option value="thriller">Thriller</option>
+                            <option value="fantasia">Fantasía</option>
+                            <option value="documental">Documental</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieTheme">¿De qué se va a tratar tu película?</label>
+                        <textarea id="movieTheme" name="movieTheme" placeholder="Describe la trama principal, los personajes principales, el conflicto central y el mensaje que quieres transmitir..." rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieGoal">¿Cuál es la meta o objetivo que quieres alcanzar?</label>
+                        <textarea id="movieGoal" name="movieGoal" placeholder="Describe qué quieres lograr, qué cambios quieres ver en tu vida, o qué impacto quieres tener..." rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieInspiration">¿Qué te inspira o motiva?</label>
+                        <textarea id="movieInspiration" name="movieInspiration" placeholder="Describe tus fuentes de inspiración, valores importantes, o experiencias que te han marcado..." rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieMessage">¿Qué mensaje quieres que transmita tu película?</label>
+                        <textarea id="movieMessage" name="movieMessage" placeholder="¿Qué lección o reflexión quieres que deje tu película al espectador?" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="movieEnding">¿Cómo te imaginas el final?</label>
+                        <select id="movieEnding" name="movieEnding" required>
+                            <option value="">Selecciona el tipo de final</option>
+                            <option value="happy">Final feliz - Todo se resuelve positivamente</option>
+                            <option value="open">Final abierto - Deja espacio para la interpretación</option>
+                            <option value="bittersweet">Final agridulce - Mezcla de alegría y tristeza</option>
+                            <option value="tragic">Final trágico - Aunque doloroso, tiene un propósito</option>
+                            <option value="hopeful">Final esperanzador - A pesar de las dificultades, hay esperanza</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="create-movie-btn">
+                        <span>🎬 Crear Mi Película</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="movieResult" class="movie-result hidden">
+                <h3>🎬 Tu Película Mental</h3>
+                <div class="created-movie-card">
+                    <h4 id="createdMovieTitle"></h4>
+                    <div class="movie-details">
+                        <p><strong>Género:</strong> <span id="createdMovieGenre"></span></p>
+                        <p><strong>Trama:</strong> <span id="createdMovieTheme"></span></p>
+                        <p><strong>Meta:</strong> <span id="createdMovieGoal"></span></p>
+                        <p><strong>Inspiración:</strong> <span id="createdMovieInspiration"></span></p>
+                        <p><strong>Mensaje:</strong> <span id="createdMovieMessage"></span></p>
+                        <p><strong>Final:</strong> <span id="createdMovieEnding"></span></p>
+                    </div>
+                    <div class="movie-actions">
+                        <button id="saveCreatedMovie" class="save-btn">
+                            <span>💾 Guardar Película</span>
+                        </button>
+                        <button id="createAnotherMovie" class="create-movie-btn">
+                            <span>🎬 Crear Otra Película</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-created-movies">
+                <h3>Mis Películas Creadas</h3>
+                <div class="recommendations-actions">
+                    <button id="clearCreatedMovies" class="save-btn" style="margin-bottom:16px;"><span>Borrar todas mis películas</span></button>
+                </div>
+                <div id="createdMoviesList" class="recommendations-grid">
+                    <p class="no-recommendations">Aún no has creado ninguna película. ¡Comienza a diseñar tu primera película mental!</p>
+                </div>
             </div>
         </div>
     </section>
