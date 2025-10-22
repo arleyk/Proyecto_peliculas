@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recomendador de Películas</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -26,6 +28,15 @@
                 </li>
             </ul>
             <div id="streakBadge" class="streak-badge">Racha: 0 🔥</div>
+            <div class="audio-controls">
+                <div class="audio-input-container">
+                    <input type="url" id="youtubeUrl" placeholder="Pega URL de YouTube aquí" class="youtube-url-input">
+                    <button id="loadVideo" class="load-video-btn" title="Cargar video">📥</button>
+                </div>
+                <button id="audioToggle" class="audio-btn" title="Reproducir/Pausar música de fondo">
+                    <span id="audioIcon">🔊</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -460,6 +471,11 @@
             </div>
         </div>
     </section>
+
+    <!-- Reproductor de YouTube oculto -->
+    <div id="youtube-player-container" style="display: none;">
+        <div id="youtube-player"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>

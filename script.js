@@ -769,6 +769,11 @@ let currentQuestionIndex = 0;
 const totalSlides = 5;
 const totalQuestions = 8;
 
+// Variables para el reproductor de YouTube
+let player;
+let isPlaying = false;
+let currentVideoId = '9Zj0JOHJR-s'; // ID del video de YouTube por defecto
+
 // Funciones del slider de películas
 function changeSlide(direction) {
     const slides = document.querySelectorAll('.slide');
@@ -914,6 +919,149 @@ function startAutoSlide() {
     }, 5000); // Cambiar cada 5 segundos
 }
 
+// Funciones para el reproductor de YouTube
+function onYouTubeIframeAPIReady() {
+    initializePlayer();
+}
+
+function initializePlayer() {
+    if (player) {
+        player.destroy();
+    }
+    
+    player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: currentVideoId,
+        playerVars: {
+            'autoplay': 0,
+            'controls': 0,
+            'disablekb': 1,
+            'enablejsapi': 1,
+            'fs': 0,
+            'iv_load_policy': 3,
+            'modestbranding': 1,
+            'playsinline': 1,
+            'rel': 0,
+            'showinfo': 0,
+            'loop': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    console.log('Reproductor de YouTube listo');
+    // Asegurar que el reproductor esté completamente inicializado
+    try {
+        if (player && player.getPlayerState) {
+            console.log('Estado del reproductor:', player.getPlayerState());
+        }
+    } catch (error) {
+        console.error('Error al verificar el estado del reproductor:', error);
+    }
+}
+
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        updateAudioButton();
+    } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.STOPPED) {
+        isPlaying = false;
+        updateAudioButton();
+    }
+}
+
+function toggleAudio() {
+    if (!player) {
+        console.log('Reproductor no disponible');
+        return;
+    }
+    
+    try {
+        if (isPlaying) {
+            player.pauseVideo();
+        } else {
+            // Asegurar que el video esté cargado antes de reproducir
+            if (player.getPlayerState() === YT.PlayerState.CUED || player.getPlayerState() === YT.PlayerState.PAUSED) {
+                player.playVideo();
+            } else {
+                // Si el video no está listo, esperar un momento y reintentar
+                setTimeout(() => {
+                    if (player && player.playVideo) {
+                        player.playVideo();
+                    }
+                }, 500);
+            }
+        }
+    } catch (error) {
+        console.error('Error al controlar el reproductor:', error);
+    }
+}
+
+function updateAudioButton() {
+    const audioBtn = document.getElementById('audioToggle');
+    const audioIcon = document.getElementById('audioIcon');
+    
+    if (isPlaying) {
+        audioBtn.classList.add('playing');
+        audioIcon.textContent = '⏸️';
+    } else {
+        audioBtn.classList.remove('playing');
+        audioIcon.textContent = '🔊';
+    }
+}
+
+// Función para extraer ID de video de URL de YouTube
+function extractVideoId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
+// Función para cargar un nuevo video
+function loadNewVideo() {
+    const urlInput = document.getElementById('youtubeUrl');
+    const url = urlInput.value.trim();
+    
+    if (!url) {
+        alert('Por favor, ingresa una URL de YouTube válida');
+        return;
+    }
+    
+    const videoId = extractVideoId(url);
+    if (!videoId) {
+        alert('URL de YouTube no válida. Por favor, verifica que sea una URL correcta de YouTube');
+        return;
+    }
+    
+    // Pausar el video actual si está reproduciéndose
+    if (player && isPlaying) {
+        player.pauseVideo();
+    }
+    
+    // Actualizar el ID del video y reinicializar el reproductor
+    currentVideoId = videoId;
+    initializePlayer();
+    
+    // Mostrar confirmación
+    const loadBtn = document.getElementById('loadVideo');
+    const originalText = loadBtn.textContent;
+    loadBtn.textContent = '✅';
+    loadBtn.style.background = 'rgba(50, 205, 50, 0.3)';
+    
+    setTimeout(() => {
+        loadBtn.textContent = originalText;
+        loadBtn.style.background = '';
+    }, 2000);
+    
+    // Limpiar el input
+    urlInput.value = '';
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     // Navegación
@@ -1048,6 +1196,28 @@ document.addEventListener('DOMContentLoaded', function() {
         clearCreatedMoviesBtn.addEventListener('click', function() {
             if (confirm('¿Seguro que deseas borrar todas tus películas creadas?')) {
                 clearAllCreatedMovies();
+            }
+        });
+    }
+    
+    // Botón de control de audio
+    const audioToggleBtn = document.getElementById('audioToggle');
+    if (audioToggleBtn) {
+        audioToggleBtn.addEventListener('click', toggleAudio);
+    }
+    
+    // Botón para cargar nuevo video
+    const loadVideoBtn = document.getElementById('loadVideo');
+    if (loadVideoBtn) {
+        loadVideoBtn.addEventListener('click', loadNewVideo);
+    }
+    
+    // Permitir cargar video con Enter
+    const youtubeUrlInput = document.getElementById('youtubeUrl');
+    if (youtubeUrlInput) {
+        youtubeUrlInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadNewVideo();
             }
         });
     }

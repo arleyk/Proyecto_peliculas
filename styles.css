@@ -53,6 +53,106 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+.audio-input-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(107, 105, 247, 0.1);
+    padding: 0.4rem;
+    border-radius: 25px;
+    border: 1px solid rgba(107, 105, 247, 0.3);
+    backdrop-filter: blur(10px);
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.youtube-url-input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    width: 180px;
+    max-width: 180px;
+    outline: none;
+}
+
+.youtube-url-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.youtube-url-input:focus {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.load-video-btn {
+    background: rgba(107, 105, 247, 0.3);
+    border: 1px solid rgba(107, 105, 247, 0.5);
+    color: #6b69f7;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.load-video-btn:hover {
+    background: rgba(107, 105, 247, 0.5);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(107, 105, 247, 0.4);
+}
+
+.audio-btn {
+    background: rgba(107, 105, 247, 0.2);
+    border: 2px solid rgba(107, 105, 247, 0.3);
+    color: #6b69f7;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.audio-btn:hover {
+    background: rgba(107, 105, 247, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(107, 105, 247, 0.4);
+}
+
+.audio-btn.playing {
+    background: rgba(107, 105, 247, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 .nav-logo {
@@ -937,6 +1037,36 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .nav-container {
+        padding: 0 1.5rem;
+    }
+    
+    .youtube-url-input {
+        width: 160px;
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .nav-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .audio-controls {
+        order: -1;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .youtube-url-input {
+        width: 150px;
+        max-width: 150px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -946,6 +1076,13 @@ body {
     
     .nav-menu {
         gap: 1rem;
+        order: 2;
+    }
+    
+    .audio-controls {
+        order: 1;
+        width: 100%;
+        justify-content: center;
     }
     
     .hero h2 {
@@ -989,6 +1126,31 @@ body {
     
     .nav-link {
         padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .audio-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .audio-input-container {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .youtube-url-input {
+        width: 100%;
+        max-width: 200px;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .load-video-btn {
+        width: 30px;
+        height: 30px;
         font-size: 0.9rem;
     }
     
